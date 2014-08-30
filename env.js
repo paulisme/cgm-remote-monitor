@@ -41,6 +41,13 @@ function config ( ) {
     shasum.update(process.env.API_SECRET);
     env.api_secret = shasum.digest('hex');
   }
+
+  // For pushing notifications to Pushover.
+  env.pushover_api_token = process.env.PUSHOVER_API_TOKEN;
+  env.pushover_user_key = process.env.PUSHOVER_USER_KEY || process.env.PUSHOVER_GROUP_KEY;
+  env.alert_threshold_high = +process.env.ALERT_THRESHOLD_HIGH || 180;
+  env.alert_threshold_low = +process.env.ALERT_THRESHOLD_LOW || 80;
+
   // TODO: clean up a bit
   // Some people prefer to use a json configuration file instead.
   // This allows a provided json config to override environment variables
@@ -53,6 +60,7 @@ function config ( ) {
   env.settings_collection = DB_SETTINGS_COLLECTION;
   var STATIC_FILES = __dirname + '/static/';
   env.static_files = process.env.NIGHTSCOUT_STATIC_FILES || STATIC_FILES;
+
   return env;
 }
 module.exports = config;
